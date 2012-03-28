@@ -21,6 +21,7 @@ module MongoMapper
 
         def initialize(owner, association)
           @proxy_owner, @association, @loaded = owner, association, false
+          @proxy_class = fetch_proxy_class(@proxy_owner)
           Array(association.options[:extend]).each { |ext| proxy_extend(ext) }
           reset
         end
@@ -96,6 +97,10 @@ module MongoMapper
             load_target
             target.send(method, *args)
           end
+        end
+
+        def fetch_proxy_class(proxy)
+          proxy.class.single_collection_inherited? ? proxy.class.collection_name.singularize : proxy.class.name
         end
 
         protected

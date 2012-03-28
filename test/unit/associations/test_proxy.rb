@@ -20,6 +20,7 @@ class ProxyTest < Test::Unit::TestCase
   def setup
     @owner = mock('owner')
     @owner.stubs(:new?).returns(false)
+    @owner.class.stubs(:single_collection_inherited?).returns(false)
     @association = mock('association')
     @association.stubs(:options).returns({:extend => []})
 

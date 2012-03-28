@@ -109,7 +109,7 @@ module MongoMapper
           end
 
           def foreign_key
-            options[:foreign_key] || proxy_owner.class.name.foreign_key
+            options[:foreign_key] || @proxy_class.foreign_key
           end
       end
     end
